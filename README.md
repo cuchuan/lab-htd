@@ -56,7 +56,11 @@ python main.py --dataset Sandiego
 ```
 
 - **CPU-only machine?** Drop the `--extra-index-url ...` part in step 2 (`pip install -r requirements.txt`); it will install CPU PyTorch and everything still runs, just slower.
-- On startup the program prints a line like `[HTD-Mamba] device=cuda:0 | selective_scan_cuda=OFF(fallback) | causal_conv1d=OFF(fallback)`, so you can confirm it is using your GPU with the pure-PyTorch fallback.
+- On startup the program prints two status lines like the following, so you can confirm it is using your GPU with the pure-PyTorch fallback and see the resolved config:
+  ```
+  [HTD-Mamba] device=cuda:0 | selective_scan_cuda=OFF(fallback) | causal_conv1d=OFF(fallback)
+  [HTD-Mamba] dataset=Sandiego | state=eval | band=189 | patch_size=11 | m=30
+  ```
 
 ## Unified entry point
 All datasets now share a single entry point `main.py`. You only pass the dataset
@@ -79,21 +83,6 @@ python main.py --dataset Sandiego --state select_best
 - `--dataset` / `-d`: dataset name; the corresponding `datasets/<dataset>.mat` must exist.
 - `--state` / `-s`: `eval` (default), `train`, or `select_best`.
 - To use a **new dataset**, drop `datasets/<name>.mat` in place and run `python main.py -d <name> -s train`. To pin its optimal `patch_size` / `m` and a checkpoint for later `eval`, add an entry to `DATASET_REGISTRY` in `main.py`.
-## Acknowledgement
-This project is based on `Mamba` ([paper](https://arxiv.org/abs/2312.00752), [code](https://github.com/state-spaces/mamba)), `Vim` ([paper](https://arxiv.org/abs/2401.09417), [code](https://github.com/hustvl/Vim)). We thank the authors for their promising studies.
 
 
-## Citation
-If you find `HTD-Mamba` useful in your research or applications, please consider giving us a star 🌟 and citing it using the following BibTeX entry.
 
-```bibtex
- @article{shen2025htd,
-	author={Shen, Dunbin and Zhu, Xuanbing and Tian, Jiacheng and Liu, Jianjun and Du, Zhenrong and Wang, Hongyu and Ma, Xiaorui},
-	journal={IEEE Transactions on Geoscience and Remote Sensing}, 
-	title={HTD-Mamba: Efficient Hyperspectral Target Detection With Pyramid State Space Model}, 
-	year={2025},
-	month={Mar.},
-	volume={63},
-	note={{Art. no. 5507315}},
-}
-```
