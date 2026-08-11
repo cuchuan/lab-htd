@@ -1,3 +1,13 @@
+# Core deep-learning framework.
+# For an NVIDIA GPU build (recommended on Windows with a GPU), install with the
+# CUDA wheel index, e.g.:
+#   pip install -r requirements.txt --extra-index-url https://download.pytorch.org/whl/cu118
+# For a CPU-only build, just run `pip install -r requirements.txt` (the default
+# PyPI wheels are CPU builds on Windows).
+torch==2.0.1
+torchvision==0.15.2
+torchaudio==2.0.2
+
 matplotlib==3.5.0
 scikit-learn==1.5.0
 einops==0.8.0
@@ -8,8 +18,7 @@ scipy
 tqdm
 
 # Note:
-# - PyTorch (torch/torchvision) is installed separately, see README for the correct
-#   CPU / CUDA build for your platform.
 # - selective_scan_cuda (built from this repo via `pip install .`) and causal_conv1d
 #   are OPTIONAL CUDA-only accelerators. On Windows / CPU you can skip them entirely:
 #   the code automatically falls back to an equivalent pure-PyTorch implementation.
+# - Use Python 3.10 (numpy==1.26.4 does not support Python 3.13+).

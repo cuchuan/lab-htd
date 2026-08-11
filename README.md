@@ -73,19 +73,24 @@ Hyperspectral target detection (HTD) identifies objects of interest from complex
   - `pip install --upgrade pip`
   - `pip install causal_conv1d==1.4.0`
 
-## Installation (Windows / CPU, no CUDA compilation)
+## Installation (Windows, no CUDA compilation)
 The `selective_scan_cuda` and `causal_conv1d` extensions above are **CUDA-only accelerators** that are hard to build on Windows. They are now **optional**: when they are not installed, the code automatically falls back to an **equivalent pure-PyTorch implementation** that produces the same results (only slower). The device is auto-detected, so it runs on an NVIDIA GPU if available and otherwise on CPU.
 
-- Python 3.10.x
-  - `conda create -n htd-mamba python=3.10`
-  - `conda activate htd-mamba`
-- Install PyTorch (pick the build matching your machine)
-  - GPU (NVIDIA, CUDA 11.8): `pip install torch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 --index-url https://download.pytorch.org/whl/cu118`
-  - CPU only: `pip install torch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2`
-- Install the Python requirements (no C++/CUDA build needed)
-  - `pip install -r requirements.txt`
-- Do **NOT** run `pip install .` or install `causal_conv1d` on Windows. The fallback path handles everything automatically.
-- Run any of the `CL_Main_*.py` scripts as usual. On a GPU it still uses CUDA (via the pure-PyTorch scan); on CPU it just runs slower.
+Just run the following **three commands** (Windows + NVIDIA GPU). No C++/CUDA compilation, and you do **NOT** need `pip install .` or `causal_conv1d`:
+
+```bash
+# 1) Create and activate the environment (Python 3.10 is required)
+conda create -n htd-mamba python=3.10 -y && conda activate htd-mamba
+
+# 2) Install everything, including the GPU (CUDA 11.8) build of PyTorch
+pip install -r requirements.txt --extra-index-url https://download.pytorch.org/whl/cu118
+
+# 3) Run (defaults to evaluating Sandiego; edit DEFAULT_DATASET/DEFAULT_STATE in main.py or pass -d/-s)
+python main.py --dataset Sandiego
+```
+
+- **CPU-only machine?** Drop the `--extra-index-url ...` part in step 2 (`pip install -r requirements.txt`); it will install CPU PyTorch and everything still runs, just slower.
+- On startup the program prints a line like `[HTD-Mamba] device=cuda:0 | selective_scan_cuda=OFF(fallback) | causal_conv1d=OFF(fallback)`, so you can confirm it is using your GPU with the pure-PyTorch fallback.
 
 ## Unified entry point
 All datasets now share a single entry point `main.py`. You only pass the dataset
