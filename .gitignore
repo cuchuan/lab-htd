@@ -1,0 +1,82 @@
+# ---------------------------------------------------------------------------
+# Python
+# ---------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+develop-eggs/
+downloads/
+eggs/
+.eggs/
+sdist/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# ---------------------------------------------------------------------------
+# Build artifacts (CUDA / C++ extensions: selective_scan_cuda, causal_conv1d)
+# These are only produced on Linux + CUDA via `pip install .` and must never be
+# committed. On Windows they are not built at all (pure-PyTorch fallback is used).
+# ---------------------------------------------------------------------------
+build/
+dist/
+*.o
+*.obj
+*.dll
+*.dylib
+*.pyd
+selective_scan_cuda*
+mamba_ssm.egg-info/
+
+# ---------------------------------------------------------------------------
+# Virtual environments
+# ---------------------------------------------------------------------------
+.venv/
+venv/
+env/
+ENV/
+.conda/
+
+# ---------------------------------------------------------------------------
+# IDE / editor
+# ---------------------------------------------------------------------------
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# ---------------------------------------------------------------------------
+# OS files
+# ---------------------------------------------------------------------------
+.DS_Store
+Thumbs.db
+
+# ---------------------------------------------------------------------------
+# Jupyter
+# ---------------------------------------------------------------------------
+.ipynb_checkpoints/
+
+# ---------------------------------------------------------------------------
+# Project outputs
+# ---------------------------------------------------------------------------
+# Newly generated model checkpoints during training are saved under models/.
+# Ignore new checkpoints, but explicitly keep the 4 pre-trained sample weights
+# that are already released with the repo.
+models/**/ckpt_*.pt
+!models/Sandiego/ckpt_159_.pt
+!models/Sandiego2/ckpt_12_.pt
+!models/abu-airport-2/ckpt_187_.pt
+!models/abu-beach-4/ckpt_180_.pt
+
+# Large hyperspectral datasets (.mat). The sample datasets already tracked in
+# git are not affected. Uncomment the next line if you do NOT want to track
+# any new .mat data files.
+# *.mat
+
+# Detection result maps / figures produced at eval time
+*.png
+!assets/*.png

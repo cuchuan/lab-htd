@@ -1,0 +1,15 @@
+matplotlib==3.5.0
+scikit-learn==1.5.0
+einops==0.8.0
+torchsummary==1.5.1
+numpy==1.26.4
+thop==0.1.1.post2209072238
+scipy
+tqdm
+
+# Note:
+# - PyTorch (torch/torchvision) is installed separately, see README for the correct
+#   CPU / CUDA build for your platform.
+# - selective_scan_cuda (built from this repo via `pip install .`) and causal_conv1d
+#   are OPTIONAL CUDA-only accelerators. On Windows / CPU you can skip them entirely:
+#   the code automatically falls back to an equivalent pure-PyTorch implementation.
